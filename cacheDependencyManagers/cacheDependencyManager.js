@@ -201,7 +201,7 @@ CacheDependencyManager.prototype.loadDependencies = function (callback) {
   // Check if package manager CLI is installed
   try {
     which.sync(this.config.cliName);
-    this.cacheLogInfo('cli exists at version :' + this.config.getCliVersion());
+    this.cacheLogInfo('cli exists at version : ' + this.config.getCliVersion());
   }
   catch (e) {
     error = 'Command line tool ' + this.config.cliName + ' not installed';
