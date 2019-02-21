@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/swarajban/npm-cache.git"
+    "url": "git://github.com/Infotaku/npm-cache.git"
   },
   "keywords": [
     "npm",
@@ -25,9 +25,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/swarajban/npm-cache/issues"
+    "url": "https://github.com/Infotaku/npm-cache/issues"
   },
-  "homepage": "https://github.com/swarajban/npm-cache",
+  "homepage": "https://github.com/Infotaku/npm-cache",
   "dependencies": {
     "async": "1.5.0",
     "fs-extra": "^0.26.2",
