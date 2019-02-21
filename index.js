@@ -53,19 +53,19 @@ var main = function () {
     }
   }
 
-  parser.option('npmCmd', {
+  parser.option('npm', {
     default: 'npm',
     help: 'launch command for npm. Can be anything you could put inside a terminal, as long as it runs npm'
   });
-  parser.option('jspmCmd', {
+  parser.option('jspm', {
     default: 'jspm',
     help: 'launch command for jspm. Can be anything you could put inside a terminal, as long as it runs jspm'
   });
-  parser.option('composerCmd', {
+  parser.option('composer', {
     default: 'composer',
     help: 'launch command for composer. Can be anything you could put inside a terminal, as long as it runs composer'
   });
-  parser.option('bowerCmd', {
+  parser.option('bower', {
     default: 'bower',
     help: 'launch command for bower. Can be anything you could put inside a terminal, as long as it runs bower'
   });
@@ -139,7 +139,7 @@ var installDependencies = function (opts) {
   async.each(
     managers,
     function startManager (managerName, callback) {
-      var managerConfig = require(availableManagers[managerName])(opts[managerName + 'Cmd']);
+      var managerConfig = require(availableManagers[managerName])(opts[managerName]);
       managerConfig.cacheDirectory = opts.cacheDirectory;
       managerConfig.forceRefresh = opts.forceRefresh;
       managerConfig.noArchive = opts.noArchive;
@@ -172,7 +172,7 @@ var reportHash = function (opts) {
   async.each(
     managers,
     function calculateHash (managerName) {
-      var managerConfig = require(availableManagers[managerName])(opts[managerName + 'Cmd']);
+      var managerConfig = require(availableManagers[managerName])(opts[managerName]);
       managerConfig.cacheDirectory = opts.cacheDirectory;
 
       var hash = managerConfig.getFileHash(managerConfig.configPath);
