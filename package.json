@@ -1,11 +1,11 @@
 {
   "name": "npm-cache",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "cache dependency manager installs to local machine",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/swarajban/npm-cache.git"
+    "url": "git://github.com/Infotaku/npm-cache.git"
   },
   "keywords": [
     "npm",
@@ -21,13 +21,17 @@
     {
       "name": "Aaron Nordyke",
       "email": "aaron.nordyke@gmail.com"
+    },
+    {
+      "name": "Yannick Rekinger",
+      "email": "yannick.rekinger@gmail.com"
     }
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/swarajban/npm-cache/issues"
+    "url": "https://github.com/Infotaku/npm-cache/issues"
   },
-  "homepage": "https://github.com/swarajban/npm-cache",
+  "homepage": "https://github.com/Infotaku/npm-cache",
   "dependencies": {
     "async": "1.5.0",
     "fs-extra": "^0.26.2",
