@@ -34,6 +34,17 @@ var main = function () {
 
   var defaultCacheDirectory = process.env.NPM_CACHE_DIR;
   if (defaultCacheDirectory === undefined) {
+    var npmCacheConfigFile = path.resolve(process.env.PWD, '.npmcache');
+
+    if (fs.existsSync(npmCacheConfigFile)) {
+      var cacheDirectoryConfig = fs.readFileSync(npmCacheConfigFile).toString();
+
+      if (cacheDirectoryConfig !== '') {
+        defaultCacheDirectory = path.resolve(cacheDirectoryConfig);
+      }
+    }
+  }
+  if (defaultCacheDirectory === undefined) {
     var homeDirectory = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
     if (homeDirectory !== undefined) {
       defaultCacheDirectory = path.resolve(homeDirectory, '.package_cache');
@@ -42,6 +53,22 @@ var main = function () {
     }
   }
 
+  parser.option('npmCmd', {
+    default: 'npm',
+    help: 'launch command for npm. Can be anything you could put inside a terminal, as long as it runs npm'
+  });
+  parser.option('jspmCmd', {
+    default: 'jspm',
+    help: 'launch command for jspm. Can be anything you could put inside a terminal, as long as it runs jspm'
+  });
+  parser.option('composerCmd', {
+    default: 'composer',
+    help: 'launch command for composer. Can be anything you could put inside a terminal, as long as it runs composer'
+  });
+  parser.option('bowerCmd', {
+    default: 'bower',
+    help: 'launch command for bower. Can be anything you could put inside a terminal, as long as it runs bower'
+  });
   parser.option('cacheDirectory', {
     default: defaultCacheDirectory,
     abbr: 'c',
@@ -76,6 +103,10 @@ var main = function () {
     '\tnpm-cache install --cacheDirectory /home/cache/ bower \t# install components using /home/cache as cache directory',
     '\tnpm-cache install --forceRefresh  bower\t# force installing dependencies from package manager without cache',
     '\tnpm-cache install --noArchive npm\t# do not compress/archive the cached dependencies',
+    '\tnpm-cache install --npm path/to/npm\t# run the specified npm executable',
+    '\tnpm-cache install --jspm path/to/jspm\t# run the specified jspm executable',
+    '\tnpm-cache install --composer path/to/composer\t# run the specified composer executable',
+    '\tnpm-cache install --bower path/to/bower\t# run the specified bower executable',
     '\tnpm-cache clean\t# cleans out all cached files in cache directory',
     '\tnpm-cache hash\t# reports the current working hash'
   ];
@@ -108,7 +139,7 @@ var installDependencies = function (opts) {
   async.each(
     managers,
     function startManager (managerName, callback) {
-      var managerConfig = require(availableManagers[managerName]);
+      var managerConfig = require(availableManagers[managerName])(opts[managerName + 'Cmd']);
       managerConfig.cacheDirectory = opts.cacheDirectory;
       managerConfig.forceRefresh = opts.forceRefresh;
       managerConfig.noArchive = opts.noArchive;
@@ -141,7 +172,7 @@ var reportHash = function (opts) {
   async.each(
     managers,
     function calculateHash (managerName) {
-      var managerConfig = require(availableManagers[managerName]);
+      var managerConfig = require(availableManagers[managerName])(opts[managerName + 'Cmd']);
       managerConfig.cacheDirectory = opts.cacheDirectory;
 
       var hash = managerConfig.getFileHash(managerConfig.configPath);
