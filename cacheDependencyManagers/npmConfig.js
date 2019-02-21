@@ -12,7 +12,7 @@ module.exports = function(npmCommand) {
   }
 
   function getNpmMajorVersion() {
-    return parseInt(getNpmVersion()().split(/\./)[0] || 0, 10);
+    return parseInt(getNpmVersion().split(/\./)[0] || 0, 10);
   }
 
   function getNpmVersion() {
